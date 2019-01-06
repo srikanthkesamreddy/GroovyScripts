@@ -1,0 +1,34 @@
+def jen = Jenkins.instance
+
+allJobs = jen.getAllItems().findAll{ job ->
+	(job instanceof Job) && !job.isDisabled()
+}
+
+today = new Date()
+today.clearTime()
+yestarday = today
+ct = new Date()
+
+def scnt = 0
+def fcnt = 0
+def othercnt = 0
+
+for(Job job : allJobs)
+{ 
+	buildsTemp = job.getBuilds().byTimestamp(yestarday.getTime(), ct.getTime())
+    builds = buildsTemp
+    //build_num=buildsTemp.get(0).getNumber()
+    def displayName = job.getFullName()
+    def jobUrl = job.getAbsoluteUrl()
+    def s = job.getConfigFile().asString() 
+    def matcher = s =~ /(?s)<url>(.*?)<\/url>/
+    def url = "";
+    matcher.each { url = it[1] }
+    git_repo=Arrays.asList(url.split('/'))
+    println git_repo[4]
+    println git_repo
+    println displayName
+    //println build_num
+    //if(displayName.contains("UI/"))
+}  
+  
