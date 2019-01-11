@@ -1,0 +1,19 @@
+def credLines = new File("C:/CI_Tools/repoNames.properties").readLines()
+def repoNames = ["repoNameA","repoNameB","repoNameC","repoNameD","repoNameE","repoNameF"]
+
+def listOfval =[]
+repoNames.each { 
+println("value ${it}");
+	credLines.each { String line ->
+	  if(line.contains("${it}")) {   
+		println("matched values"+ line)
+		line.trim()
+		listOfval << line.split(/\=/).last()
+		 	
+	  }  
+	  println("lines"+ line)
+	  
+	}  
+}
+
+println(listOfval)
